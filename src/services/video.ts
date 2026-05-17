@@ -1,6 +1,5 @@
 'use server' // Wajib di Next.js untuk menandakan fungsi ini berjalan di server secara aman
 
-import { db } from '@/lib/db'
 import { ContentType } from '@prisma/client'
 
 // 1. LOGIKA INPUT MOVIE (FILM TUNGGAL)
@@ -10,6 +9,9 @@ export async function createMovieAction(formData: {
   videoUrl: string
 }) {
   try {
+    // Dipindahkan ke dalam fungsi agar tidak memicu crash saat build awal
+    const { db } = await import('@/lib/db')
+
     // Simpan ke tabel utama (Content) sekaligus membuat data di tabel MovieData (Relation)
     const newMovie = await db.content.create({
       data: {
@@ -38,6 +40,9 @@ export async function createSeriesBulkAction(formData: {
   bulkEpisodesText: string // Format input text area: "1|link1\n2|link2\n3|link3"
 }) {
   try {
+    // Dipindahkan ke dalam fungsi agar tidak memicu crash saat build awal
+    const { db } = await import('@/lib/db')
+
     // A. Buat atau cari dulu konten utamanya di tabel Content
     let content = await db.content.findFirst({
       where: { tmdbId: formData.tmdbId, type: ContentType.SERIES }
@@ -63,7 +68,7 @@ export async function createSeriesBulkAction(formData: {
         // 1. Amankan komentar menggunakan Regex Cerdas (Aman dari https://)
         let targetText = cleanLine.replace(/(?<!https?:)\/\/.*$/, '')
 
-// 2. USIR KARAKTER GAIB (\r atau spasi berlebih) DULUAN!
+        // 2. USIR KARAKTER GAIB (\r atau spasi berlebih) DULUAN!
         targetText = targetText.trim()
 
         // 3. SEKARANG REGEX AKAN BEKERJA 100% KARENA KUTIP/KOMA SUDAH PASTI ADA DI UJUNG AKHIR
@@ -101,15 +106,10 @@ export async function createSeriesBulkAction(formData: {
     .filter(Boolean) as any[]
 
     if (episodesData.length === 0) {
-    throw new Error("Gagal membaca link. Pastikan setiap baris berisi link streaming yang valid.")
-    }
-
-    if (episodesData.length === 0) {
-    throw new Error("Gagal membaca link. Pastikan setiap baris berisi link streaming yang valid.")
+      throw new Error("Gagal membaca link. Pastikan setiap baris berisi link streaming yang valid.")
     }
 
     // C. Simpan semua episode sekaligus ke database Postgres
-    // Menggunakan createManyAndReturn (fitur cepat Prisma) atau looping create
     await db.$transaction(
       episodesData.map((ep) =>
         db.episode.upsert({

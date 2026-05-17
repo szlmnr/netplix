@@ -63,9 +63,9 @@ export async function PUT(
     .filter((line: string) => line.length > 0)
 
   if (currentContent.type === 'MOVIE') {
-    await db.content.update({
-      where: { id },
-      data: { videoUrl: cleanLinks || '' }
+    await db.episode.updateMany({
+        where: { contentId: id },
+        data: { videoUrl: cleanLinks || '' }
     })
   } else {
     // Hapus episode rusak lama, lalu tulis ulang yang baru dan bersih

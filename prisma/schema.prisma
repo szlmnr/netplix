@@ -1,0 +1,76 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Enum untuk membedakan tipe konten
+enum ContentType {
+  MOVIE
+  SERIES
+}
+
+// 1. TABEL UTAMA KONTEN (Movie atau Series)
+model Content {
+  id           String      @id @default(uuid())
+  tmdbId       String      // ID dari TMDB untuk fetch sinopsis, poster, dll di sisi publik
+  type         ContentType
+  title        String      // Judul lokal/bawaan (opsional untuk backup)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relasi
+  episodes     Episode[]   // Jika tipe SERIES, akan punya banyak episode
+  movies       MovieData?  // Jika tipe MOVIE, langsung link ke tabel movie
+  views        ViewStats[]
+  comments     Comment[]
+
+  @@index([tmdbId])
+}
+
+// 2. TABEL KHUSUS MOVIE (Jika tipenya Movie, link streaming disimpan di sini)
+model MovieData {
+  id         String   @id @default(uuid())
+  contentId  String   @unique
+  videoUrl   String   // Link video streaming (.m3u8 / mp4)
+  content    Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
+// 3. TABEL EPISODE (Jika tipenya Series, link streaming diatur per episode)
+model Episode {
+  id         String   @id @default(uuid())
+  contentId  String
+  season     Int      @default(1)
+  episodeNum Int
+  videoUrl   String   // Link video streaming per episode
+  createdAt  DateTime @default(now())
+
+  content    Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  // Mencegah ada nomor episode yang sama dalam satu season di series yang sama
+  @@unique([contentId, season, episodeNum])
+}
+
+// 4. TABEL STATISTIK VIEWS (Untuk Dashboard Real-time)
+model ViewStats {
+  id        String   @id @default(uuid())
+  contentId String
+  viewedAt  DateTime @default(now()) // Mencatat jam berapa ditonton buat grafik dashboard
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@index([contentId, viewedAt])
+}
+
+// 5. TABEL KOMENTAR
+model Comment {
+  id        String   @id @default(uuid())
+  contentId String
+  username  String
+  text      String
+  createdAt DateTime @default(now())
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@index([contentId])
+}

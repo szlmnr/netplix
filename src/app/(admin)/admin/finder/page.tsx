@@ -36,7 +36,7 @@ export default function AdminFinderPage() {
     }
   }
 
-  // 2. Fungsi submit data menggunakan dinamis import untuk menghindari crash komponen client
+  // 2. Fungsi submit data menggunakan Fetch API internal (Aman dari crash build)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!selectedContent) return
@@ -44,39 +44,42 @@ export default function AdminFinderPage() {
     setSubmitStatus({ message: "Sedang menyimpan ke database..." })
 
     try {
-      // Teknik memanggil Server Action secara dinamis di dalam fungsi (aman dari crash render awal)
-      const { createMovieAction, createSeriesBulkAction } = await import('@/services/video')
+      const payload = contentType === 'movie' 
+        ? {
+            contentType,
+            tmdbId: selectedContent.id.toString(),
+            title: selectedContent.title || selectedContent.name,
+            videoUrl: videoUrl
+          }
+        : {
+            contentType,
+            tmdbId: selectedContent.id.toString(),
+            title: selectedContent.title || selectedContent.name,
+            season: seasonNum,
+            bulkEpisodesText: bulkText
+          }
 
-      if (contentType === 'movie') {
-        const result = await createMovieAction({
-          tmdbId: selectedContent.id.toString(),
-          title: selectedContent.title || selectedContent.name,
-          videoUrl: videoUrl
+      const res = await fetch('/api/admin/video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+
+      const result = await res.json()
+
+      if (result.success) {
+        setSubmitStatus({ 
+          success: true, 
+          message: contentType === 'movie' ? "Film berhasil disimpan ke Postgres!" : result.message 
         })
-        if (result.success) {
-          setSubmitStatus({ success: true, message: "Film berhasil disimpan ke Postgres!" })
-          setVideoUrl('')
-          setSelectedContent(null)
-        } else {
-          setSubmitStatus({ success: false, message: result.error })
-        }
+        setVideoUrl('')
+        setBulkText('')
+        setSelectedContent(null)
       } else {
-        const result = await createSeriesBulkAction({
-          tmdbId: selectedContent.id.toString(),
-          title: selectedContent.title || selectedContent.name,
-          season: seasonNum,
-          bulkEpisodesText: bulkText
-        })
-        if (result.success) {
-          setSubmitStatus({ success: true, message: result.message })
-          setBulkText('')
-          setSelectedContent(null)
-        } else {
-          setSubmitStatus({ success: false, message: result.error })
-        }
+        setSubmitStatus({ success: false, message: result.error })
       }
     } catch (err: any) {
-      setSubmitStatus({ success: false, message: "Gagal memuat fungsi database server." })
+      setSubmitStatus({ success: false, message: "Gagal terhubung ke server database." })
     }
   }
 

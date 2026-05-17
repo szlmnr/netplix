@@ -22,7 +22,7 @@ export async function GET(
   if (content.type === 'MOVIE') {
     linksText = content.episodes[0]?.videoUrl || ''
   } else {
-    linksText = content.episodes.map(ep => ep.videoUrl).join('\n')
+    linksText = content.episodes.map((ep: any) => ep.videoUrl).join('\n')
   }
 
   return NextResponse.json({

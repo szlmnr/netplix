@@ -141,7 +141,7 @@ export default async function AdminDashboardPage() {
                         </div>
                     ) : (
                         <div className="divide-y divide-gray-800">
-                            {recentContents.map((content) => (
+                            {recentContents.map((content: any) => (
                                 <div key={content.id} className="flex items-center justify-between py-3.5 first:pt-0 last:pb-0 group">
                                     <div className="flex items-center gap-3">
                                         {/* Poster Mini */}

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { tmdb } from '@/lib/tmdb'
 
 export async function GET(request: Request) {
+    console.log('TMDB_TOKEN:', process.env.TMDB_TOKEN ? '✅ ADA' : '❌ KOSONG')
+    console.log('TMDB_API_KEY:', process.env.TMDB_API_KEY ? '✅ ADA' : '❌ KOSONG')
   const { searchParams } = new URL(request.url)
   const query = searchParams.get('query')
   const type = searchParams.get('type') as 'movie' | 'tv'

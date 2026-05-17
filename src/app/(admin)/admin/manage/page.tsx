@@ -3,6 +3,7 @@ import { tmdb } from '@/lib/tmdb'
 import Link from 'next/link'
 import { revalidatePath } from 'next/cache'
 import DeleteButton from '@/components/DeleteButton'
+import { Content } from '@prisma/client'
 
 // Fungsi mengambil seluruh konten untuk di-manage
 async function getManageList() {
@@ -11,7 +12,7 @@ async function getManageList() {
   })
 
   const fullData = await Promise.all(
-    contents.map(async (item) => {
+    contents.map(async (item: Content) => {
       try {
         const details = item.type === 'MOVIE'
           ? await tmdb.getMovieDetails(item.tmdbId)

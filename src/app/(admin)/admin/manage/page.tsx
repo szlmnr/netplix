@@ -91,7 +91,7 @@ export default async function ManageContentPage() {
                   </td>
                 </tr>
               ) : (
-                list.map((item) => (
+                list.map((item: any) => (
                   <tr key={item.id} className="hover:bg-gray-800/30 transition">
                     <td className="p-4 font-semibold text-gray-200">{item.title}</td>
                     <td className="p-4">

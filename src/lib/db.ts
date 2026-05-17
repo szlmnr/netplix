@@ -1,7 +1,3 @@
-import * as dotenv from 'dotenv'
-// Load env di awal agar string koneksi terbaca oleh driver pg
-dotenv.config({ path: '.env.local' })
-
 import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { Pool } from 'pg'
@@ -15,13 +11,21 @@ let prisma: PrismaClient
 if (globalForPrisma.prisma) {
   prisma = globalForPrisma.prisma
 } else {
-  // 1. Buat koneksi pool menggunakan driver PostgreSQL murni (pasti terbaca oleh Node.js)
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+  // Ambil URL database dari env bawaan Vercel/Next.js
+  const connectionString = process.env.DATABASE_URL
+
+  // PENGAMAN CRASH: Jika string kosong (saat build awal di Vercel), bungkus agar tidak meledak layar hitam
+  if (!connectionString) {
+    console.warn("⚠️ DATABASE_URL belum terdeteksi di env runtime.")
+  }
+
+  // Buat pool koneksi menggunakan adapter pg resmi
+  const pool = new Pool({ 
+    connectionString: connectionString || "postgresql://mock:mock@localhost:5432/mock",
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  })
   
-  // 2. Bungkus koneksi tersebut ke dalam Adapter Prisma 7
   const adapter = new PrismaPg(pool)
-  
-  // 3. Masukkan adapter ke dalam constructor PrismaClient
   prisma = new PrismaClient({ adapter })
   
   if (process.env.NODE_ENV !== 'production') {

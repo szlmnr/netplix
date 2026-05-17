@@ -17,7 +17,7 @@ async function getDashboardData() {
 
     // 2. Ambil detail gambar mini poster dari TMDB untuk daftar konten terbaru
     const detailedRecent = await Promise.all(
-        recentContents.map(async (item) => {
+        recentContents.map(async (item: any) => {
             try {
                 const details = item.type === 'MOVIE'
                     ? await tmdb.getMovieDetails(item.tmdbId)

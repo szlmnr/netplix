@@ -15,15 +15,21 @@ enum ContentType {
 // 1. TABEL UTAMA KONTEN (Movie atau Series)
 model Content {
   id           String      @id @default(uuid())
-  tmdbId       String      // ID dari TMDB untuk fetch sinopsis, poster, dll di sisi publik
+  tmdbId       String
   type         ContentType
-  title        String      // Judul lokal/bawaan (opsional untuk backup)
+  title        String
+  slug         String      @unique
+  posterPath   String?     // ✅ Tambah
+  backdropPath String?     // ✅ Tambah
+  releaseDate  String?     // ✅ Tambah
+  overview     String?     // ✅ Tambah
+  genres       String[]
+  tags         String[]    // ✅ Tambah ini
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 
-  // Relasi
-  episodes     Episode[]   // Jika tipe SERIES, akan punya banyak episode
-  movies       MovieData?  // Jika tipe MOVIE, langsung link ke tabel movie
+  episodes     Episode[]
+  movies       MovieData?
   views        ViewStats[]
   comments     Comment[]
 

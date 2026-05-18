@@ -23,7 +23,12 @@ if (globalForPrisma.prisma) {
     if (!connectionString) {
         throw new Error("DATABASE_URL is not set. Check Vercel environment variables.")
     }
-    const pool = new Pool({ connectionString })
+    const pool = new Pool({ 
+    connectionString: connectionString,
+    ssl: process.env.NODE_ENV === 'production' 
+        ? { rejectUnauthorized: true }  // ✅ verify-full behavior
+        : false
+    })
 
     const adapter = new PrismaPg(pool)
     prisma = new PrismaClient({ adapter })

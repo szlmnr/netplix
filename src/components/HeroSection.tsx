@@ -39,7 +39,7 @@ export default function HeroSection({ item }: { item: HeroItem }) {
         <div className="flex items-center gap-3 mb-5">
           <span className="flex items-center gap-1.5 text-[10px] font-black tracking-[0.2em] uppercase text-red-400 border border-red-500/30 bg-red-500/10 px-3 py-1.5 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
-            Spotlight Utama
+            Featured
           </span>
           <span className={`text-[10px] font-black tracking-widest uppercase px-3 py-1.5 rounded-full ${
             item.type === 'MOVIE'

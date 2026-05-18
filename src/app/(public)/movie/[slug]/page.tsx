@@ -14,25 +14,25 @@ async function getMovieData(slug: string) {
   try {
     const details = await tmdb.getMovieDetails(content.tmdbId)
     return {
-      title:       details.title,
-      overview:    details.overview,
+      title: details.title,
+      overview: details.overview,
       backdropPath: details.backdropPath,
-      posterPath:  details.posterPath,
-      tagline:     details.tagline,
-      director:    details.director,
+      posterPath: details.posterPath,
+      tagline: details.tagline,
+      director: details.director,
       releaseDate: details.releaseDate,
-      videoUrl:    content.movies.videoUrl,
+      videoUrl: content.movies.videoUrl,
     }
   } catch {
     return {
-      title:       content.title,
-      overview:    content.overview || 'Sinopsis belum tersedia.',
+      title: content.title,
+      overview: content.overview || 'Sinopsis belum tersedia.',
       backdropPath: content.backdropPath,
-      posterPath:  content.posterPath,
-      tagline:     '',
-      director:    'Unknown',
+      posterPath: content.posterPath,
+      tagline: '',
+      director: 'Unknown',
       releaseDate: content.releaseDate,
-      videoUrl:    content.movies.videoUrl,
+      videoUrl: content.movies.videoUrl,
     }
   }
 }
@@ -148,7 +148,7 @@ export default async function MoviePlayerPage({
         </div>
 
         {/* NOW PLAYING BAR */}
-        <div className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 py-3.5">
+        <div className="flex items-center gap-3 bg-white/3 border border-white/6 rounded-xl px-5 py-3.5">
           <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse shrink-0" />
           <div>
             <p className="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">Sedang Diputar</p>
@@ -185,14 +185,11 @@ export default async function MoviePlayerPage({
 
             <div>
               <p className="text-[10px] text-zinc-600 uppercase tracking-wider font-bold mb-1">Sumber Video</p>
-              <a
-                href={movie.videoUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs text-blue-400 hover:text-blue-300 transition-colors break-all line-clamp-2"
-              >
-                {movie.videoUrl}
-              </a>
+              <div>
+                <a className="text-xs text-blue-400 hover:text-blue-300 transition-colors break-all line-clamp-2">
+                  Fansub Indonesia
+                </a>
+              </div>
             </div>
           </div>
 

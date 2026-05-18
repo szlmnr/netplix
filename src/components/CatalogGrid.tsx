@@ -13,9 +13,7 @@ export default function CatalogGrid({ catalog, hasFilter }: { catalog: CatalogIt
   if (!catalog || catalog.length === 0) {
     return (
       <div className="text-center py-28 border border-dashed border-zinc-800/60 rounded-2xl flex flex-col items-center justify-center gap-4">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 text-zinc-700">
-          <path d="M12 1.5a.75.75 0 0 1 .75.75V7.5h-1.5V2.25A.75.75 0 0 1 12 1.5ZM11.25 7.5v5.69l-1.72-1.72a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l3-3a.75.75 0 1 0-1.06-1.06l-1.72 1.72V7.5h-1.5ZM9 15a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H9ZM13.5 15.75a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5H14.25a.75.75 0 0 1-.75-.75ZM9 18a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H9Z" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-10 h-10 text-zinc-700"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
         <p className="text-zinc-600 text-sm max-w-xs font-medium">
           Tidak ada konten yang sesuai dengan filter ini.
         </p>
@@ -41,12 +39,9 @@ export default function CatalogGrid({ catalog, hasFilter }: { catalog: CatalogIt
             className="group relative bg-zinc-900/40 rounded-xl overflow-hidden border border-zinc-900 hover:border-zinc-700 transition-all duration-300 hover:-translate-y-1"
           >
             {/* Badge */}
-            <span className={`absolute top-2 left-2 z-10 text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-md backdrop-blur-sm ${
-              item.type === 'MOVIE'
-                ? 'bg-blue-600/80 text-white'
-                : 'bg-purple-600/80 text-white'
-            }`}>
-              {item.type === 'MOVIE' ? 'Film' : 'Series'}
+            <span className={`absolute top-0 left-0 z-10 text-[9px] font-black tracking-widest uppercase px-3 py-1 rounded-br-xl backdrop-blur-sm ${item.type === 'MOVIE' ? 'bg-blue-700/80 text-white' : 'bg-red-700/80 text-white'
+              }`}>
+              {item.type === 'MOVIE' ? 'Movie' : 'Series'}
             </span>
 
             {/* Poster */}

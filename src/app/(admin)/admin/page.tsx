@@ -78,69 +78,56 @@ export default async function AdminDashboardPage() {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                    <Link
-                        href="/"
-                        className="bg-gray-900 hover:bg-gray-800 text-xs font-semibold px-4 py-2.5 rounded-lg border border-gray-800 transition flex items-center gap-2"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-4 h-4 text-gray-400"
-                        >
-                            <path d="M11.47 3.822a.75.75 0 0 1 1.06 0l8.25 8.25a.75.75 0 0 1-1.06 1.06L12 5.56l-7.72 7.72a.75.75 0 0 1-1.06-1.06l8.25-8.25Z" />
-                            <path d="M4.5 10.5a.75.75 0 0 0-.75.75v7.5c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-4.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 0 .75.75h4.5a.75.75 0 0 0 .75-.75v-7.5a.75.75 0 0 0-.75-.75h-15Z" />
-                        </svg>
-                        Lihat Website
-                    </Link>
+                <div className="w-full lg:w-auto min-w-0 block">
+                    <div className="flex items-center gap-2 w-full overflow-x-auto pb-2 pt-0.5 px-1 scrollbar-none flex-nowrap">
 
-                    <Link
-                        href="/admin/manage"
-                        className="bg-gray-900 hover:bg-gray-800 text-amber-400 text-xs font-semibold px-4 py-2.5 rounded-lg border border-amber-900/40 transition flex items-center gap-2"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-4 h-4 text-amber-500"
+                        {/* 1. LIHAT WEBSITE - High Visibility Gray */}
+                        <Link
+                            href="/"
+                            className="flex items-center gap-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 hover:border-zinc-700 px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 shrink-0 shadow-md"
                         >
-                            <path fillRule="evenodd" d="M11.078 2.25c-.288 0-.546.17-.66.435L9.141 5.74a4.5 4.5 0 0 0-1.152.665L4.99 5.175a.75.75 0 0 0-.913.254l-1.5 2.598a.75.75 0 0 0 .19.99l2.481 1.716a4.468 4.468 0 0 0 0 1.322l-2.481 1.716a.75.75 0 0 0-.19.992l1.5 2.597a.75.75 0 0 0 .914.254l3-.122c.356.262.743.486 1.152.665l1.277 3.055c.114.266.372.435.66.435h3c.288 0 .546-.17.66-.435l1.277-3.055a4.506 4.506 0 0 0 1.152-.665l3 .122a.75.75 0 0 0 .913-.254l1.5-2.597a.75.75 0 0 0-.19-.992l-2.482-1.716a4.466 4.466 0 0 0 0-1.322l2.482-1.716a.75.75 0 0 0 .19-.99l-1.5-2.598a.75.75 0 0 0-.914-.254l-3 .122a4.456 4.456 0 0 0-1.152-.665L13.922 2.685a.75.75 0 0 0-.66-.435h-3ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clipRule="evenodd" />
-                        </svg>
-                        Kelola Data
-                    </Link>
-
-                    <Link
-                        href="/admin/finder"
-                        className="bg-emerald-600 hover:bg-emerald-500 text-gray-950 font-bold text-xs px-4 py-2.5 rounded-lg shadow-md transition flex items-center gap-2"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-4 h-4 text-gray-950"
-                        >
-                            <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
-                        </svg>
-                        Finder TMDB
-                    </Link>
-
-                    <form action="/api/admin/logout" method="POST" className="inline">
-                        <button
-                            type="submit"
-                            className="bg-red-950/40 hover:bg-red-900 border border-red-900/40 text-red-400 text-xs font-semibold px-4 py-2.5 rounded-lg transition cursor-pointer flex items-center gap-2"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                                className="w-4 h-4 text-red-400"
-                            >
-                                <path fillRule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9a.75.75 0 0 1-1.5 0V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4 text-zinc-400">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
-                            Keluar Admin
-                        </button>
-                    </form>
+                            Lihat Website
+                        </Link>
+
+                        {/* 2. KELOLA DATA - High Visibility Amber Accent */}
+                        <Link
+                            href="/admin/manage"
+                            className="flex items-center gap-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-amber-400 border border-amber-500/30 hover:border-amber-500/60 px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 shrink-0 shadow-md shadow-amber-500/5"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4 text-amber-500">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                            </svg>
+                            Kelola Data
+                        </Link>
+
+                        {/* 3. FINDER TMDB - High Visibility Emerald Accent */}
+                        <Link
+                            href="/admin/finder"
+                            className="flex items-center gap-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/60 px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 shrink-0 shadow-md shadow-emerald-500/5"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4 text-emerald-500">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
+                            </svg>
+                            Finder TMDB
+                        </Link>
+
+                        {/* 4. KELUAR ADMIN - High Visibility Red Accent */}
+                        <form action="/api/admin/logout" method="POST" className="inline shrink-0 m-0">
+                            <button
+                                type="submit"
+                                className="flex items-center gap-2 rounded-lg bg-zinc-900 hover:bg-red-950/30 text-red-400 border border-red-500/20 hover:border-red-500/50 px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 shrink-0 cursor-pointer shadow-md"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4 text-red-500">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                                </svg>
+                                Keluar Admin
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </header>
 
@@ -217,7 +204,8 @@ export default async function AdminDashboardPage() {
                 {/* ROW 2: DAFTAR TERBARU */}
                 <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 md:p-6 shadow-xl shadow-black/30">
                     <h2 className="text-sm font-bold text-gray-200 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        ⏱️ Konten yang Baru Ditambahkan
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 text-amber-500"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                        Konten yang Baru Ditambahkan
                     </h2>
 
                     {recentContents.length === 0 ? (

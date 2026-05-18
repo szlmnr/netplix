@@ -147,10 +147,13 @@ export default async function HomePage({
 
       <footer className="border-t border-zinc-900 py-8">
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-3 text-zinc-700 text-xs font-medium">
-          <p>© 2026 Netplix Stream. All rights reserved.</p>
-          <div className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            Serverless Infrastructure Active
+          <p>2026 TokuCorner</p>
+          <div className="flex items-center text-zinc-500 font-bold gap-1.5">
+            {/* <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /> */}
+            TokuCorner adalah situs streaming Tokusatsu subtitle Indonesia yang fokus menyajikan berbagai serial terbaru untuk komunitas di Indonesia.
+Perlu diketahui, semua video di sini diputar melalui sistem embed. Kami tidak menyimpan file video di server sendiri, melainkan hanya menghubungkan dari sumber luar.
+
+Tayangan yang ada merupakan hasil kerja keras para Fansub yang sudah menerjemahkan setiap episodenya. Sebagai bentuk apresiasi, kami selalu mencantumkan sumber asli di tiap postingan supaya karya teman-teman Fansub tetap dihargai.
           </div>
         </div>
       </footer>

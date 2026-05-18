@@ -7,10 +7,10 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex flex-col leading-none">
           <span className="text-[11px] font-black tracking-[0.3em] text-red-500/80 uppercase mb-0.5">
-            Premium Stream
+            Now Play
           </span>
-          <span className="text-2xl md:text-3xl font-black tracking-tighter text-white">
-            NETPLIX
+          <span className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white">
+            TokuCorner
           </span>
         </Link>
 

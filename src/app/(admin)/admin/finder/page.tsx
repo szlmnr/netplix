@@ -246,7 +246,7 @@ export default function AdminFinderPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
           {/* KOLOM 1: DAFTAR GRUP JUDUL DARI FILE JSON LU */}
-          <div className="bg-gray-900 p-4 rounded-xl border border-gray-800 shadow-xl flex flex-col h-[650px]">
+          <div className="bg-gray-900 p-4 rounded-xl border border-gray-800 shadow-xl flex flex-col h-162.5">
             <h2 className="text-sm font-bold mb-3 text-amber-500 uppercase tracking-wider">📦 1. Hasil Ekstraksi JSON ({Object.keys(jsonGroups).length})</h2>
             {Object.keys(jsonGroups).length === 0 ? (
               <div className="flex-1 border border-dashed border-gray-800 rounded-lg flex items-center justify-center p-4 text-center text-xs text-gray-500">
@@ -277,7 +277,7 @@ export default function AdminFinderPage() {
           </div>
 
           {/* KOLOM 2: HASIL PENCARIAN TMDB */}
-          <div className="bg-gray-900 p-4 rounded-xl border border-gray-800 shadow-xl flex flex-col h-[650px]">
+          <div className="bg-gray-900 p-4 rounded-xl border border-gray-800 shadow-xl flex flex-col h-162.5">
             <h2 className="text-sm font-bold mb-3 text-emerald-400 uppercase tracking-wider">🔍 2. Finder Data TMDB (en-US)</h2>
 
             <form onSubmit={handleSearch} className="mb-3">
@@ -315,9 +315,9 @@ export default function AdminFinderPage() {
                   className={`flex gap-3 p-2.5 rounded-lg cursor-pointer transition border text-xs ${selectedContent?.id === item.id ? 'bg-emerald-950/40 border-emerald-500' : 'bg-gray-800/30 border-gray-700 hover:bg-gray-800'}`}
                 >
                   {item.poster_path ? (
-                    <img src={`https://image.tmdb.org/t/p/w92${item.poster_path}`} alt="poster" className="w-10 h-14 object-cover rounded flex-shrink-0" />
+                    <img src={`https://image.tmdb.org/t/p/w92${item.poster_path}`} alt="poster" className="w-10 h-14 object-cover rounded shrink-0" />
                   ) : (
-                    <div className="w-10 h-14 bg-gray-700 rounded flex items-center justify-center text-[10px] flex-shrink-0">No Pic</div>
+                    <div className="w-10 h-14 bg-gray-700 rounded flex items-center justify-center text-[10px] shrink-0">No Pic</div>
                   )}
                   <div className="min-w-0">
                     <h3 className="font-semibold text-gray-200 truncate">{item.title || item.name}</h3>
@@ -331,7 +331,7 @@ export default function AdminFinderPage() {
           </div>
 
           {/* KOLOM 3: FORM VALIDASI & SUBMIT POSTGRES */}
-          <div className="bg-gray-900 p-4 rounded-xl border border-gray-800 shadow-xl h-[650px] overflow-y-auto">
+          <div className="bg-gray-900 p-4 rounded-xl border border-gray-800 shadow-xl h-162.5 overflow-y-auto">
             <h2 className="text-sm font-bold mb-3 text-indigo-400 uppercase tracking-wider">📥 3. Input ke Database Lokal</h2>
 
             {selectedContent ? (

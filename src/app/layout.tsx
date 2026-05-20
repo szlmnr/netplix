@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Syne } from "next/font/google"; // 🟩 Import Syne
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// 🟩 Konfigurasi font Syne
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
 });
 
@@ -25,9 +21,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      // 🟩 Suntik variabel --font-syne ke html
+      className={`${syne.variable} h-full antialiased`} 
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      {/* 🟩 Tambahkan class font-sans di body */}
+      <body className="min-h-full flex flex-col font-sans bg-zinc-950 text-white">
+        {children}
+      </body>
     </html>
   );
 }

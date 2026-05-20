@@ -55,12 +55,12 @@ export default function HeroSection({ item }: { item: HeroItem }) {
 
             {/* BADGES ROW */}
             <div className="flex items-center justify-center md:justify-start gap-2.5 mb-4 sm:mb-5">
-              <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black tracking-[0.25em] uppercase text-amber-400 border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 rounded-xl backdrop-blur-md">
+              <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-bold tracking-[0.25em] uppercase text-amber-400 border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 rounded-xl backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                 Featured
               </span>
               {/* ⚡ CHECKPOINT 2: REPLACE BADGE LAMA LU DENGAN INI */}
-              <span className={`text-[10px] font-black tracking-widest uppercase px-3 py-1.5 rounded-xl backdrop-blur-md flex items-center gap-1.5 ${item.type === 'MOVIE'
+              <span className={`text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-xl backdrop-blur-md flex items-center gap-1.5 ${item.type === 'MOVIE'
                 ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
                 : 'bg-red-500/10 text-red-400 border border-red-500/20'
                 }`}>

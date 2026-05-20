@@ -39,8 +39,12 @@ export default function CatalogGrid({ catalog, hasFilter }: { catalog: CatalogIt
             className="group relative bg-zinc-900/40 rounded-xl overflow-hidden border border-zinc-900 hover:border-zinc-700 transition-all duration-300 hover:-translate-y-1"
           >
             {/* Badge */}
-            <span className={`absolute top-0 left-0 z-10 text-[9px] font-black tracking-widest uppercase px-3 py-1 rounded-br-xl backdrop-blur-sm ${item.type === 'MOVIE' ? 'bg-blue-700/80 text-white' : 'bg-red-700/80 text-white'
-              }`}>
+            <span className={`absolute top-0 left-0 z-10 font-black tracking-widest uppercase transition-all duration-300
+  text-[8px] px-2 py-0.5 rounded-br-lg 
+  sm:text-[10px] sm:px-3 sm:py-1 sm:rounded-br-xl 
+  backdrop-blur-sm ${item.type === 'MOVIE' ? 'bg-blue-700/80 text-white' : 'bg-red-700/80 text-white'
+              }`}
+            >
               {item.type === 'MOVIE' ? 'Movie' : 'Series'}
             </span>
 
@@ -65,11 +69,11 @@ export default function CatalogGrid({ catalog, hasFilter }: { catalog: CatalogIt
             </div>
 
             {/* Metadata */}
-            <div className="p-3">
-              <h3 className="font-bold text-xs line-clamp-1 text-zinc-300 group-hover:text-white transition-colors">
+            <div className="p-2 sm:p-3 transition-all">
+              <h3 className="font-bold text-[11px] sm:text-xs line-clamp-1 text-zinc-300 group-hover:text-white transition-colors tracking-wide">
                 {item.title}
               </h3>
-              <p className="text-[10px] text-zinc-600 mt-1 font-semibold">
+              <p className="text-[9px] sm:text-[10px] text-zinc-500 mt-0.5 sm:mt-1 font-semibold tracking-wider">
                 {item.releaseDate ? item.releaseDate.substring(0, 4) : '—'}
               </p>
             </div>

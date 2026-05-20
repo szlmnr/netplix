@@ -42,7 +42,7 @@ export default async function HomePage({
 
       {showHero ? <HeroSection item={heroItem} /> : <div className="pt-28" />}
 
-      <main className="max-w-7xl mx-auto px-6 md:px-10 space-y-10 relative z-20 pb-20 mt-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 space-y-10 relative z-20 pb-20 mt-8">
 
         {/* FILTER BAR */}
         <div className="flex flex-col lg:flex-row gap-4 justify-between items-center bg-zinc-900/50 backdrop-blur-xl p-4 rounded-2xl border border-zinc-800/60">

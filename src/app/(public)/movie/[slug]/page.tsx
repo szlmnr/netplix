@@ -2,6 +2,7 @@ import { db } from '@/lib/db'
 import { tmdb } from '@/lib/tmdb'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import CommentSection from "@/components/CommentSection"
 
 async function getMovieData(slug: string) {
   const content = await db.content.findUnique({
@@ -14,6 +15,7 @@ async function getMovieData(slug: string) {
   try {
     const details = await tmdb.getMovieDetails(content.tmdbId)
     return {
+      id: content.id,
       title: details.title,
       overview: details.overview,
       backdropPath: details.backdropPath,
@@ -25,6 +27,7 @@ async function getMovieData(slug: string) {
     }
   } catch {
     return {
+      id: content.id,
       title: content.title,
       overview: content.overview || 'Sinopsis belum tersedia.',
       backdropPath: content.backdropPath,
@@ -192,7 +195,9 @@ export default async function MoviePlayerPage({
               </div>
             </div>
           </div>
-
+        </div>
+        <div className="pt-4">
+          <CommentSection contentId={movie.id} />
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { db } from '@/lib/db'
 import { tmdb } from '@/lib/tmdb'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import CommentSection from '@/components/CommentSection'
 
 async function getSeriesData(slug: string) {
   const content = await db.content.findUnique({
@@ -14,6 +15,7 @@ async function getSeriesData(slug: string) {
   try {
     const details = await tmdb.getSeriesDetails(content.tmdbId)
     return {
+      id: content.id,
       slug: content.slug,
       title: details.title,
       overview: details.overview,
@@ -26,6 +28,7 @@ async function getSeriesData(slug: string) {
     }
   } catch {
     return {
+      id: content.id,
       slug: content.slug,
       title: content.title,
       overview: content.overview || 'Sinopsis belum tersedia.',
@@ -259,6 +262,9 @@ export default async function SeriesPlayerPage({
             </div>
           </div>
 
+          <div className="pt-2">
+            <CommentSection contentId={series.id} />
+          </div>
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ export default function Navbar() {
         {/* Admin Button */}
         <Link
           href="/admin"
-          className="group flex items-center gap-2.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-zinc-300 hover:text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all duration-300"
+          className="group flex items-center gap-1.5 md:gap-2.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-zinc-300 hover:text-white text-[11px] md:text-xs font-bold px-3.5 py-2 md:px-5 md:py-2.5 rounded-xl transition-all duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

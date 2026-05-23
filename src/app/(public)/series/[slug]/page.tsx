@@ -2,7 +2,8 @@ import { db } from '@/lib/db'
 import { tmdb } from '@/lib/tmdb'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import CommentSection from '@/components/CommentSection'
+import CommentSectionWrapper from '@/components/CommentSectionWrapper';
+import { auth } from "@/auth";
 import { Icon } from '@iconify/react'
 
 async function getSeriesData(slug: string) {
@@ -58,6 +59,7 @@ export default async function SeriesPlayerPage({
   params: Promise<{ slug: string }>
   searchParams: Promise<{ ep?: string; season?: string }>
 }) {
+  const session = await auth()
   const { slug } = await params
   const { ep, season } = await searchParams
 
@@ -264,7 +266,7 @@ export default async function SeriesPlayerPage({
           </div>
 
           <div className="pt-2">
-            <CommentSection contentId={series.id} />
+            <CommentSectionWrapper contentId={series.id} isLoggedIn={!!session?.user} />
           </div>
         </div>
       </div>

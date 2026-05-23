@@ -2,7 +2,8 @@ import { db } from '@/lib/db'
 import { tmdb } from '@/lib/tmdb'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import CommentSection from "@/components/CommentSection"
+import CommentSectionWrapper from '@/components/CommentSectionWrapper';
+import { auth } from "@/auth";
 
 async function getMovieData(slug: string) {
   const content = await db.content.findUnique({
@@ -53,6 +54,7 @@ export default async function MoviePlayerPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
+  const session = await auth()
   const { slug } = await params
   const movie = await getMovieData(slug)
   if (!movie) notFound()
@@ -196,9 +198,10 @@ export default async function MoviePlayerPage({
             </div>
           </div>
         </div>
-        <div className="pt-4">
-          <CommentSection contentId={movie.id} />
-        </div>
+        <CommentSectionWrapper
+          contentId={movie.id}
+          isLoggedIn={!!session?.user}
+        />
       </div>
     </div>
   )

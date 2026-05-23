@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
-import { Syne } from "next/font/google"; // 🟩 Import Syne
+import { Syne } from "next/font/google";
 import "./globals.css";
+import Providers from "@/components/Providers";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
-// 🟩 Konfigurasi font Syne
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "TokuCorner", 
-  description: "Streaming Tokusatsu Sub Indonesia Terlengkap, Update Kamen Rider Zeztz dan Project R.E.D Sub Indonesia", 
+  title: "TokuCorner",
+  description: "Streaming Tokusatsu Sub Indonesia Terlengkap, Update Kamen Rider Zeztz dan Project R.E.D Sub Indonesia",
 };
 
 export default function RootLayout({
@@ -21,12 +24,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      // 🟩 Suntik variabel --font-syne ke html
-      className={`${syne.variable} h-full antialiased`} 
+      className={`${syne.variable} h-full antialiased`}
     >
-      {/* 🟩 Tambahkan class font-sans di body */}
       <body className="min-h-full flex flex-col font-sans bg-zinc-950 text-white">
-        {children}
+        <Providers>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          {children}
+        </Providers>
       </body>
     </html>
   );

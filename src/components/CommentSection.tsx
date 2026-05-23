@@ -4,10 +4,12 @@ import React, { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 
 interface CommentSectionProps {
+  isLoggedIn: boolean;
+  onAuthRequired: () => void;
   contentId: string
 }
 
-export default function CommentSection({ contentId }: CommentSectionProps) {
+export default function CommentSection({ isLoggedIn, onAuthRequired, contentId }: CommentSectionProps) {
   const [comments, setComments] = useState<any[]>([])
   const [username, setUsername] = useState('')
   const [text, setText] = useState('')
@@ -95,8 +97,16 @@ export default function CommentSection({ contentId }: CommentSectionProps) {
         
         <div className="flex justify-end">
           <button
-            type="submit"
-            disabled={isSubmitting}
+            type={isLoggedIn ? "submit" : "button"}
+          disabled={isSubmitting}
+          onClick={(e) => {
+            // 🟩 Jika belum login, stop proses, lalu panggil modal pop-up
+            if (!isLoggedIn) {
+              e.preventDefault();
+              onAuthRequired();
+              return;
+            }
+          }}
             className="bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-bold text-xs px-4 py-2 rounded-lg transition-all shadow-md tracking-wide"
           >
             {isSubmitting ? 'Mengirim...' : 'Kirim Komentar'}

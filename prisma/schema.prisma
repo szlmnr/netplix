@@ -33,6 +33,7 @@ model Content {
   views        ViewStats[]
   comments     Comment[]
   watchlists  Watchlist[]
+  histories    WatchHistory[]
 
   @@index([tmdbId])
 }
@@ -84,38 +85,46 @@ model Comment {
 
 model Watchlist {
   id        String   @id @default(cuid())
-  userId    String   // ID User yang punya watchlist
-  itemId    String   // ID Film atau Series-nya
+  userId    String   
+  itemId    String   
   createdAt DateTime @default(now())
 
   content   Content  @relation(fields: [itemId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, itemId]) // Biar user gak bisa bookmark judul yang sama dua kali
+  @@unique([userId, itemId]) 
 }
 
-// 6. TABEL USER (Scalable & Siap pakai Credentials maupun OAuth/Sosmed)
 model User {
-  id            String    @id @default(uuid())
-  name          String?
-  email         String    @unique
-  password      String?   // Dibikin opsional (?) biar kalau ke depan lu tambah login via Google, user OAuth gak crash karena gak punya password
-  image         String?   // Untuk simpan foto profil user
-  role          Role      @default(USER) // Membedakan User biasa dengan Admin / VIP
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id        String    @id @default(uuid())
+  username  String?   @unique // 🟩 Diubah dari name ke username + dibikin @unique biar gak duplikat
+  email     String    @unique
+  password  String?   
+  image     String?   // Untuk simpan foto profil/avatar user
+  role      Role      @default(USER) 
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
-  // Relasi ke tabel Watchlist (Satu user bisa punya banyak bookmark)
-  watchlists    Watchlist[]
-  
-  // 💡 JALUR SCALABLE KE DEPAN:
-  // Lu bisa tambah relasi baru di sini nanti tanpa ngerusak kode lama, contoh:
-  // histories   WatchHistory[] 
-  // isPremium   Boolean   @default(false)
+  // Relasi
+  watchlists Watchlist[]
+  histories  WatchHistory[] // 🟩 Mengaktifkan fitur history tontonan
 }
 
 enum Role {
   USER
   VIP
   ADMIN
+}
+
+// 🟩 MODEL BARU: Untuk Fitur Sejarah Tontonan
+model WatchHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  itemId    String
+  watchedAt DateTime @default(now()) // Kapan user nonton film ini
+
+  content   Content  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemId]) // Biar kalau nonton berulang kali, yang tercatat tetap update waktu nonton terakhirnya saja
 }

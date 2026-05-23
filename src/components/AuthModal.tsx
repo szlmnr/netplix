@@ -12,12 +12,13 @@ interface AuthModalProps {
 
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const router = useRouter();
-  const [isRegister, setIsRegister] = useState(false); // 🟩 State kunci buat bolak-balik form
+  const [isRegister, setIsRegister] = useState(false); 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [usernameVal, setUsernameVal] = useState<string>("");
 
-  if (!isOpen) return null; // Kalau gak dipicu, modal ga bakal nampak
+  if (!isOpen) return null; 
 
   // Handle Aksi Login
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,8 +36,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
       if (res?.error) {
         setError("Email atau password lu salah, fren!");
       } else {
-        onClose(); // Tutup modal otomatis
-        router.refresh(); // Refresh data halaman biar pita auto kuning emas
+        onClose(); 
+        router.refresh(); 
       }
     } catch (err) {
       setError("Ada gangguan server nih.");
@@ -62,7 +63,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         setSuccess("Akun sukses dibuat! Membuka form login...");
         setTimeout(() => {
           setSuccess(null);
-          setIsRegister(false); // 🟩 Kelar daftar, otomatis pindah ke form login
+          setIsRegister(false); 
+          setUsernameVal(""); // 🟩 Sekalian reset input username biar bersih pas balik login
         }, 1500);
       }
     } catch (err) {
@@ -74,15 +76,12 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      {/* Klik area luar buat tutup modal */}
       <div className="absolute inset-0" onClick={onClose} />
 
       <div className="relative w-full max-w-sm bg-zinc-900/90 border border-zinc-800/80 p-6 rounded-2xl shadow-2xl backdrop-blur-md animate-in fade-in zoom-in-95 duration-150">
-        
-        {/* Tombol Close Pojok Kanan Atas */}
+
         <button onClick={onClose} className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-200 text-xs">✕</button>
 
-        {/* Header Dynamic */}
         <div className="text-center mb-6">
           <h1 className="text-xl font-black uppercase tracking-tighter text-white font-syne">
             Toku<span className={isRegister ? "text-red-600" : "text-blue-500"}>Corner</span>
@@ -98,7 +97,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         {/* SWAP FORM BERDASARKAN STATE */}
         {!isRegister ? (
           /* 🟦 FORM LOGIN */
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form key="form-login" onSubmit={handleLogin} className="space-y-4"> {/* 🟩 Dikasih key unik */}
             <div>
               <label className="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">Email</label>
               <input type="email" name="email" required placeholder="admin@toku.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-zinc-100 focus:outline-none focus:border-zinc-600 transition" />
@@ -117,10 +116,18 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           </form>
         ) : (
           /* 🟥 FORM REGISTER */
-          <form onSubmit={handleRegister} className="space-y-4">
+          <form key="form-register" onSubmit={handleRegister} className="space-y-4"> {/* 🟩 Dikasih key unik */}
             <div>
-              <label className="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">Nama Lengkap</label>
-              <input type="text" name="name" required placeholder="Rider Baru" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-zinc-100 focus:outline-none focus:border-zinc-600 transition" />
+              <label className="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">Username</label>
+              <input
+                type="text"
+                name="username"
+                required
+                value={usernameVal} 
+                onChange={(e) => setUsernameVal(e.target.value.replace(/\s/g, ""))} 
+                placeholder="riderbaru"
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-zinc-100 focus:outline-none focus:border-zinc-600 transition"
+              />
             </div>
             <div>
               <label className="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">Email</label>

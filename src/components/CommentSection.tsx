@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { Icon } from '@iconify/react'
 
 interface CommentSectionProps {
   contentId: string
@@ -62,9 +63,9 @@ export default function CommentSection({ contentId }: CommentSectionProps) {
   }
 
   return (
-    <div className="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-5 mt-8 max-w-4xl shadow-lg">
-      <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-200 mb-4 flex items-center gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 text-zinc-400"><path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" /></svg>
+    <div className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-4 h-fit lg:max-h-[calc(100vh-12rem)] overflow-y-auto">
+      <h3 className="text-xs font-black uppercase tracking-wider text-zinc-400 mb-4 flex items-center gap-2.5">
+            <Icon icon="solar:chat-line-bold" className="w-4 h-4 text-zinc-400" />
             <span>Ruang Diskusi & Laporan ({comments.length})</span>
         </h3>
 
@@ -78,7 +79,7 @@ export default function CommentSection({ contentId }: CommentSectionProps) {
             onChange={(e) => setUsername(e.target.value)}
             maxLength={30}
             required
-            className="w-full bg-zinc-800/60 border border-zinc-700/60 rounded-lg px-3 py-2 text-xs text-gray-100 placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition-colors"
+            className="w-full px-4 py-3 rounded-xl text-xs font-semibold border transition-all duration-200 group bg-white/[0.02] border-white/[0.05] text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-200 hover:border-white/10"
           />
         </div>
         
@@ -89,7 +90,7 @@ export default function CommentSection({ contentId }: CommentSectionProps) {
           onChange={(e) => setText(e.target.value)}
           maxLength={500}
           required
-          className="w-full bg-zinc-800/60 border border-zinc-700/60 rounded-lg px-3 py-2 text-xs text-gray-100 placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition-colors resize-none"
+          className="w-full px-4 py-3 rounded-xl text-xs font-semibold border transition-all duration-200 group bg-white/[0.02] border-white/[0.05] text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-200 hover:border-white/10"
         />
         
         <div className="flex justify-end">

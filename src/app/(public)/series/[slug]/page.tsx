@@ -3,6 +3,7 @@ import { tmdb } from '@/lib/tmdb'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import CommentSection from '@/components/CommentSection'
+import { Icon } from '@iconify/react'
 
 async function getSeriesData(slug: string) {
   const content = await db.content.findUnique({
@@ -206,7 +207,9 @@ export default async function SeriesPlayerPage({
             {/* SINOPSIS */}
             {series.overview && (
               <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl px-5 py-4 space-y-2">
-                <h3 className="text-[11px] font-black uppercase tracking-widest text-zinc-600">Sinopsis</h3>
+                <h3 className="flex items-center gap-3 text-sm font-black uppercase tracking-widest text-zinc-600">
+                  <Icon icon="solar:notebook-minimalistic-bold" className="w-4 h-4 text-zinc-600" />
+                  Sinopsis</h3>
                 <p className="text-sm text-zinc-400 leading-relaxed">{series.overview}</p>
               </div>
             )}
@@ -215,13 +218,11 @@ export default async function SeriesPlayerPage({
           {/* EPISODE LIST — 1/3 */}
           <div className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-4 h-fit lg:max-h-[calc(100vh-12rem)] overflow-y-auto">
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/[0.06]">
-              <h3 className="text-xs font-black uppercase tracking-widest text-zinc-500 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
-                  <path fillRule="evenodd" d="M2.25 5.25a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3V15a3 3 0 0 1-3 3h-3v.257c0 .597.237 1.17.659 1.591l.621.622a.75.75 0 0 1-.53 1.28h-9a.75.75 0 0 1-.53-1.28l.621-.622a2.25 2.25 0 0 0 .659-1.59V18h-3a3 3 0 0 1-3-3V5.25Zm1.5 0v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5Z" clipRule="evenodd" />
-                </svg>
+              <h3 className="text-sm font-black uppercase tracking-wider text-zinc-600 flex items-center gap-3">
+                <Icon icon="solar:server-minimalistic-bold" className="w-4 h-4 text-zinc-600" />
                 Episode List
               </h3>
-              <span className="text-[10px] bg-white/5 border border-white/10 text-zinc-500 px-2 py-1 rounded-md font-black">
+              <span className="text-xs bg-white/5 border border-white/10 text-zinc-500 px-2 py-1 rounded-md font-bold">
                 {series.episodes.length} Eps
               </span>
             </div>

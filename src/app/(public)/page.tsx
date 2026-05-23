@@ -1,8 +1,10 @@
 import { db } from '@/lib/db'
+import { auth } from '@/auth'
 import Navbar from '@/components/Navbar'
 import HeroSection from '@/components/HeroSection'
 import GenreSlider from '@/components/GenreSlider'
-import CatalogGrid from '@/components/CatalogGrid'
+import CatalogSection from '@/components/CatalogSection'
+import Link from 'next/link'
 
 export default async function HomePage({
   searchParams,
@@ -11,25 +13,38 @@ export default async function HomePage({
 }) {
   const { q, type, genre: currentGenre } = await searchParams
 
-  // ✅ Fetch langsung dari DB — poster sudah tersimpan, tidak perlu hit TMDB
+  const session = await auth()
+  const isLoggedIn = !!session
+
   const contents = await db.content.findMany({
     where: {
       ...(type ? { type: type as any } : {}),
       ...(q ? { title: { contains: q, mode: 'insensitive' } } : {}),
+      ...(currentGenre ? { genres: { has: currentGenre } } : {}),
     },
     orderBy: { createdAt: 'desc' },
   })
 
   const catalog = contents.map((c) => ({
-    id: c.id,
-    slug: c.slug,
-    title: c.title,
-    type: c.type as 'MOVIE' | 'SERIES',
-    posterPath: c.posterPath ?? undefined,
+    id:           c.id,
+    slug:         c.slug,
+    title:        c.title,
+    type:         c.type as 'MOVIE' | 'SERIES',
+    posterPath:   c.posterPath   ?? undefined,
     backdropPath: c.backdropPath ?? undefined,
-    releaseDate: c.releaseDate ?? undefined,
-    overview: c.overview ?? undefined,
+    releaseDate:  c.releaseDate  ?? undefined,
+    overview:     c.overview     ?? undefined,
   }))
+
+  let watchlistIds: string[] = []
+  if (isLoggedIn && session?.user?.id) {
+    // ✅ Sesuai schema — pakai itemId
+const userWatchlist = await db.watchlist.findMany({
+  where: { userId: session.user.id },
+  select: { itemId: true }
+})
+watchlistIds = userWatchlist.map((w) => w.itemId)
+  }
 
   const heroItem = catalog.length > 0 ? catalog[0] : null
   const showHero = heroItem && !q && !type && !currentGenre
@@ -43,8 +58,6 @@ export default async function HomePage({
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 space-y-10 relative z-20 pb-20 mt-8">
 
-        {/* FILTER BAR */}
-        
 
         <GenreSlider currentGenre={currentGenre} q={q} type={type} />
 
@@ -58,20 +71,19 @@ export default async function HomePage({
               {catalog.length} Judul
             </span>
           </div>
-          <CatalogGrid catalog={catalog} hasFilter={hasFilter} />
+
+          <CatalogSection
+            catalog={catalog}
+            hasFilter={hasFilter}
+            isLoggedIn={isLoggedIn}
+            watchlistIds={watchlistIds}
+          />
         </div>
       </main>
 
       <footer className="border-t border-zinc-900 py-8">
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-3 text-zinc-700 text-xs font-medium">
           <p>2026 TokuCorner</p>
-          <div className="flex items-center text-zinc-500 font-bold gap-1.5">
-            {/* <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /> */}
-            TokuCorner adalah situs streaming Tokusatsu subtitle Indonesia yang fokus menyajikan berbagai serial terbaru untuk komunitas di Indonesia.
-Perlu diketahui, semua video di sini diputar melalui sistem embed. Kami tidak menyimpan file video di server sendiri, melainkan hanya menghubungkan dari sumber luar.
-
-Tayangan yang ada merupakan hasil kerja keras para Fansub yang sudah menerjemahkan setiap episodenya. Sebagai bentuk apresiasi, kami selalu mencantumkan sumber asli di tiap postingan supaya karya teman-teman Fansub tetap dihargai.
-          </div>
         </div>
       </footer>
     </div>
